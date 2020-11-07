@@ -4,7 +4,7 @@ Contiene todo el código en lenguaje JAVA para securizar el backend API-REST de 
 
 Este proyecto contiene un cliente-adaptador que utiliza el framework Springboot (Spring Security) e implementa la seguridad necesaria para poder utilizar el producto Keycloak mediante el [adaptador JAVA](https://wjw465150.gitbooks.io/keycloak-documentation/content/securing_apps/topics/oidc/java/java-adapters.html) para aplicaciones Springboot ( SpringSecurity ).
 
-La configuración de seguridad para una API REST (backend) se consigue añadiendo en su archivo ``build.gradle`` la dependencia a esta librería que esta publicada en jitpack.io (pendiente de cambiar [![](https://jitpack.io/v/sesporti/equiipoclub.svg)](https://jitpack.io/#sesporti/equiipoclub)).
+La configuración de seguridad para una API REST (backend) se consigue añadiendo en su archivo ``build.gradle`` la dependencia a esta librería que esta publicada en [![](https://jitpack.io/v/PRACTICA-DIM/libreriaSauron-Backend.svg)](https://jitpack.io/#PRACTICA-DIM/libreriaSauron-Backend).
 
 Dicha librería *(libreriaSauron-Backend)* contiene el código necesario para implementar la autenticación y autorización de usuarios, así como las interfaces necesarias para obtener los datos de identidad y los roles del usuario autenticado en un gestor de identidad y acceso (IAM) o servidor **Sauron**.
 >- Dentro de la librería nos encontramos los siguientes **componentes**:
