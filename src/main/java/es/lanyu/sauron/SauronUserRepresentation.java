@@ -1,8 +1,17 @@
-package es.dimXLII.sauron;
+package es.lanyu.sauron;
 
 import java.util.List;
 import org.keycloak.representations.idm.UserRepresentation;
 
+/**
+ * Esta clase es una implementación de {@link SauronUser} para obtener un {@link UserRepresentation} como representación de un 
+ * usuario del producto Keycloak.
+ * @author ACING DIM XLII
+ * @version v1.0.0
+ * @see SauronUser
+ * @see UserRepresentation
+ *
+ */
 public class SauronUserRepresentation implements SauronUser {
 
 	UserRepresentation userRepresentation;

@@ -1,4 +1,4 @@
-package es.dimXLII.sauron.config;
+package es.lanyu.sauron.config;
 
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.springboot.KeycloakSpringBootProperties;
@@ -31,9 +31,11 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 /**
+ * Esta clase de configuración proporciona una configuración de seguridad
+ * para Spring basada en el producto Keycloak, creando una instancia WebSecurityConfigurer protegida por el servidor Keycloak.
  * @author ACING DIM XLII
- * 
- * @nota Esta clase de configuración proporciona una configuración de seguridad de Spring basada en keycloak, creando una instancia WebSecurityConfigurer protegido por Keycloak.
+ * @version v1.0.0
+ * @see KeycloakWebSecurityConfigurerAdapter
  */
 @KeycloakConfiguration
 @EnableGlobalMethodSecurity(prePostEnabled = true)

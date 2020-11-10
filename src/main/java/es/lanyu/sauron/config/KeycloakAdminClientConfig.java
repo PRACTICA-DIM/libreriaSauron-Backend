@@ -1,10 +1,9 @@
-package es.dimXLII.sauron.config;
-
+package es.lanyu.sauron.config;
 
 /**
- *  @author ACING DIM XLII
- *
- * <p>Esta clase implementa la configuraci�n de Keycloak usando el patr�n Constructor.</p>
+ * Esta clase implementa la configuración de Keycloak usando el patrón Constructor.
+ * @author ACING DIM XLII
+ * @version v1.0.0
  */
 public class KeycloakAdminClientConfig {
 

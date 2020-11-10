@@ -1,11 +1,13 @@
-package es.dimXLII.sauron;
+package es.lanyu.sauron;
 
 import java.util.List;
 
 /**
+ * Esta clase es la implementación de {@link SauronUser} con los datos básicos y sus roles.
  * @author ACING DIM XLII
- * @nota Esta clase es la implementación de un usuario
- * {@link SauronUser} con los datos básicos y sus roles.
+ * @version v1.0.0
+ * @see SauronUser
+ * 
  */
 public class SauronUserImpl implements SauronUser {
 

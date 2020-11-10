@@ -1,4 +1,4 @@
-package es.dimXLII.sauron;
+package es.lanyu.sauron;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,16 +16,18 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import es.dimXLII.sauron.config.KeycloakAdminClientConfig;
-import es.dimXLII.sauron.utils.KeycloakAdminClientUtils;
-import es.dimXLII.sauron.utils.KeycloakPropertyReader;
+import es.lanyu.sauron.config.KeycloakAdminClientConfig;
+import es.lanyu.sauron.utils.KeycloakAdminClientUtils;
+import es.lanyu.sauron.utils.KeycloakPropertyReader;
 
 /**
+ * Esta clase es un servicio, especialización de @Component, que
+ * proporciona un usuario {@link SauronUser} autenticado y sus roles, también proporciona un {@link SauronUserRepresentation} mediante
+ * el método {@link getUserProfileOfLoggedUser()}.
  * @author ACING DIM XLII
- * @nota Esta clase es un servicio, especialización de @Component, que
- *       proporciona un usuario {@link SauronUser} y sus roles, a través del
- *       {@link CurrentUserProvider}.
- *
+ * @version v1.0.0
+ * @see es.lanyu.sauron.SauronUser
+ * 
  */
 @Service
 public class SauronServiceImpl implements SauronService {

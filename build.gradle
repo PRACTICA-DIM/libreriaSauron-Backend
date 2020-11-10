@@ -4,8 +4,8 @@ plugins {
 	id 'java-library'
 }
 
-group = 'es.dimXLII'
-version = 'v0.1'
+group = 'es.lanyu'
+version = 'v1.0.0'
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 

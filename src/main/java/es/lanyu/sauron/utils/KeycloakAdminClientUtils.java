@@ -1,4 +1,4 @@
-package es.dimXLII.sauron.utils;
+package es.lanyu.sauron.utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,17 +17,16 @@ import org.keycloak.representations.idm.RoleRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.dimXLII.sauron.config.KeycloakAdminClientConfig;
-import es.dimXLII.sauron.config.KeycloakAdminClientConfig.KeycloakAdminClientConfigBuilder;
+import es.lanyu.sauron.config.KeycloakAdminClientConfig;
+import es.lanyu.sauron.config.KeycloakAdminClientConfig.KeycloakAdminClientConfigBuilder;
 
 /**
- *  @author ACING DIM XLII
- *
- * <p>Esta clase de utilidad permite cargar la configuración de Keycloak utilizando
- *  un lector de propiedades, así como el cliente de Keycloak que se comunicará con
- *   una instancia de Keycloak mediante el contexto de seguridad y la clase de configuración de Keycloak.
- *   <br>También proporciona comportamiento para añadir y borrar un rol a un rol compuesto y borrar un rol de una lista de roles, </p>
- *
+ * Esta clase de utilidad permite cargar la configuración de Keycloak utilizando
+ * un lector de propiedades, así como el cliente de Keycloak que se comunicará con
+ * una instancia de Keycloak mediante el contexto de seguridad y la clase de configuración de Keycloak.
+ * <br>También proporciona comportamiento para añadir y borrar un rol a un rol compuesto y borrar un rol de una lista de roles
+ * @author ACING DIM XLII
+ * @version v1.0.0
  */
 public class KeycloakAdminClientUtils {
 
