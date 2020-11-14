@@ -1,5 +1,8 @@
 package es.lanyu.sauron.config;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.springboot.KeycloakSpringBootProperties;
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
@@ -29,12 +32,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 /**
  * Esta clase de configuración proporciona una configuración de seguridad
  * para Spring basada en el producto Keycloak, creando una instancia WebSecurityConfigurer protegida por el servidor Keycloak.
  * @author ACING DIM XLII
- * @version v1.0.0
+ * @version v1.0.1
  * @see KeycloakWebSecurityConfigurerAdapter
  */
 @KeycloakConfiguration
@@ -49,6 +55,20 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         // to use principal and authentication together with @async
         SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
     }
+    
+	@Bean //No olvidar este Bean para evitar problemas de bloqueo por políticas de CORS.
+	public CorsFilter corsFilter() {
+	    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+	    final CorsConfiguration config = new CorsConfiguration();
+	    config.setAllowCredentials(true);
+	    config.setAllowedOrigins(Collections.singletonList("*"));
+	    config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept"));
+	    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+	    source.registerCorsConfiguration("/**", config);
+	    return new CorsFilter(source);
+	}
 
     /**
      * Si no desea utilizar el archivo keycloak.json, descomenta este bean.
@@ -68,9 +88,14 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         return new KeycloakRestTemplate(keycloakClientRequestFactory);
     }
 
+    /**
+     * Hace que los roles no tengan el prefijo ROLE_ y pasen a mayúsculas.
+     * @return SimpleAuthorityMapper
+     */
     public SimpleAuthorityMapper grantedAuthority() {
         SimpleAuthorityMapper mapper = new SimpleAuthorityMapper();
         mapper.setConvertToUpperCase(true);
+        mapper.setPrefix("");
         return mapper;
     }
 
@@ -97,20 +122,11 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        super.configure(http);
-//        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry expressionInterceptUrlRegistry = http.cors() //
-//                .and() //
                 http.csrf().disable()                
-//                .anonymous().disable() //
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //
-                .and()//
+                .and()
                 .authorizeRequests()
                 .anyRequest().permitAll();
-
-//        expressionInterceptUrlRegistry = expressionInterceptUrlRegistry.antMatchers("/iam/accounts/promoters*").hasRole("PROMOTER");
-//        expressionInterceptUrlRegistry = expressionInterceptUrlRegistry.antMatchers("/iam/accounts/supervisors*").hasRole("SUPERVISOR");
-
-//        expressionInterceptUrlRegistry.anyRequest().permitAll();
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

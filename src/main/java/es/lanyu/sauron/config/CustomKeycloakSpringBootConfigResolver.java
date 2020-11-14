@@ -14,8 +14,6 @@ import org.springframework.context.annotation.Configuration;
  * @version v1.0.0
  * @see org.keycloak.adapters.KeycloakDeployment
  * @see org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver
- * 
- *
  */
 @Configuration
 public class CustomKeycloakSpringBootConfigResolver extends KeycloakSpringBootConfigResolver {
