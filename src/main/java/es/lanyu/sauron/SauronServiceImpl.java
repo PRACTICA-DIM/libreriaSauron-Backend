@@ -22,9 +22,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import es.lanyu.sauron.config.KeycloakAdminClientConfig;
-import es.lanyu.sauron.utils.KeycloakAdminClientUtils;
-import es.lanyu.sauron.utils.KeycloakPropertyReader;
+import es.lanyu.sauron.config.SauronAdminClientConfig;
+import es.lanyu.sauron.utils.SauronAdminClientUtils;
+import es.lanyu.sauron.utils.SauronPropertyReader;
 
 /**
  * Esta clase es un servicio, especialización de @Component, que
@@ -32,7 +32,7 @@ import es.lanyu.sauron.utils.KeycloakPropertyReader;
  * el método {@link getUserProfileOfLoggedUser()}, así como todos los roles del Realm donde se encuentra securizado el cliente mediante
  * el método {@link getRolesRealm()}.
  * @author ACING DIM XLII
- * @version v1.0.1
+ * @version v1.0.2
  * @see es.lanyu.sauron.SauronUser
  * @see es.lanyu.sauron.SauronUserRepresentation
  * 
@@ -41,7 +41,7 @@ import es.lanyu.sauron.utils.KeycloakPropertyReader;
 public class SauronServiceImpl implements SauronService {
 
 	@Autowired
-	private KeycloakPropertyReader keycloakPropertyReader;
+	private SauronPropertyReader sauronPropertyReader;
 	
 	@Value("${sauron.keycloak-admin}")
 	private String clientKeycloakAdmin;
@@ -49,10 +49,12 @@ public class SauronServiceImpl implements SauronService {
 	@Value("${sauron.client-secret}")
 	private String clientSecret;
 	
-	@Value("${keycloak.auth-server-url}")//esta propiedad la extrae del properties del backend que securiza.
+	//esta propiedad la extrae del properties del backend que securiza.
+	@Value("${keycloak.auth-server-url}")
 	private String urlServer;
 	
-	@Value("${keycloak.realm}")//esta propiedad la extrae del properties del backend que securiza.
+	//esta propiedad la extrae del properties del backend que securiza.
+	@Value("${keycloak.realm}")
 	private String realm;
 		
 	public List<String> getCurrentUserRoles() {
@@ -90,9 +92,9 @@ public class SauronServiceImpl implements SauronService {
 
 		KeycloakPrincipal<RefreshableKeycloakSecurityContext> principal = (KeycloakPrincipal<RefreshableKeycloakSecurityContext>) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
-		KeycloakAdminClientConfig keycloakAdminClientConfig = KeycloakAdminClientUtils
-				.loadConfig(keycloakPropertyReader);
-		Keycloak keycloak = KeycloakAdminClientUtils.getKeycloakClient(principal.getKeycloakSecurityContext(),
+		SauronAdminClientConfig keycloakAdminClientConfig = SauronAdminClientUtils
+				.loadConfig(sauronPropertyReader);
+		Keycloak keycloak = SauronAdminClientUtils.getKeycloakClient(principal.getKeycloakSecurityContext(),
 				keycloakAdminClientConfig);
 
 		// Get realm
@@ -109,10 +111,10 @@ public class SauronServiceImpl implements SauronService {
 	@Override
 	public List<String> getRolesRealm() {
 
-		// Accedo al servidor construyendo una instancia al cliente keycloak-admin que es una cuenta
+		// Accedo al servidor construyendo una instancia al servidor Sauron para acceder al cliente keycloak-admin que es una cuenta
 		// cuya única misión es proporcionar datos del servidor. Realiza la verificación del backend
 		// mediante credentials secret, no es necesario ningun usuario autenticado.
-		Keycloak keycloak = KeycloakBuilder.builder()
+		Keycloak sauron = KeycloakBuilder.builder()
 			    .serverUrl(urlServer)
 			    .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
 			    .realm(realm)
@@ -123,10 +125,10 @@ public class SauronServiceImpl implements SauronService {
 			            .connectionPoolSize(10).build()
 			    ).build();
 
-		keycloak.tokenManager().getAccessToken();
+		sauron.tokenManager().getAccessToken();
 		
 		// Get realm
-		RealmResource realmResource = keycloak.realm(realm);
+		RealmResource realmResource = sauron.realm(realm);
 
 		RolesResource rolesResource = realmResource.roles();
 
@@ -134,7 +136,7 @@ public class SauronServiceImpl implements SauronService {
 
 		List<String> roles = roleRepresentationList.stream().map(r -> r.getName().toUpperCase()).collect(Collectors.toList());
 		
-		keycloak.close();
+		sauron.close();
 				
 		return roles;
 		

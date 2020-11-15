@@ -40,16 +40,16 @@ import org.springframework.web.filter.CorsFilter;
  * Esta clase de configuración proporciona una configuración de seguridad
  * para Spring basada en el producto Keycloak, creando una instancia WebSecurityConfigurer protegida por el servidor Keycloak.
  * @author ACING DIM XLII
- * @version v1.0.1
+ * @version v1.0.2
  * @see KeycloakWebSecurityConfigurerAdapter
  */
 @KeycloakConfiguration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
+public class SauronSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
     private final KeycloakClientRequestFactory keycloakClientRequestFactory;
 
-    public KeycloakSecurityConfig(KeycloakClientRequestFactory keycloakClientRequestFactory) {
+    public SauronSecurityConfig(KeycloakClientRequestFactory keycloakClientRequestFactory) {
         this.keycloakClientRequestFactory = keycloakClientRequestFactory;
 
         // to use principal and authentication together with @async
@@ -79,7 +79,7 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
     @Bean
     @Primary
     public KeycloakConfigResolver keycloakConfigResolver(KeycloakSpringBootProperties properties) {
-        return new CustomKeycloakSpringBootConfigResolver(properties);
+        return new CustomSauronSpringBootConfigResolver(properties);
     }
 
     @Bean

@@ -17,86 +17,86 @@ import org.keycloak.representations.idm.RoleRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.lanyu.sauron.config.KeycloakAdminClientConfig;
-import es.lanyu.sauron.config.KeycloakAdminClientConfig.KeycloakAdminClientConfigBuilder;
+import es.lanyu.sauron.config.SauronAdminClientConfig;
+import es.lanyu.sauron.config.SauronAdminClientConfig.SauronAdminClientConfigBuilder;
 
 /**
- * Esta clase de utilidad permite cargar la configuración de Keycloak utilizando
- * un lector de propiedades, así como el cliente de Keycloak que se comunicará con
- * una instancia de Keycloak mediante el contexto de seguridad y la clase de configuración de Keycloak.
- * <br>También proporciona comportamiento para añadir y borrar un rol a un rol compuesto y borrar un rol de una lista de roles
+ * Esta clase de utilidad permite cargar la configuración de Sauron utilizando
+ * un lector de propiedades, así como el cliente de Sauron que se comunicará con
+ * una instancia de Sauron mediante el contexto de seguridad y la clase de configuración de Sauron.
+ * <br>También proporciona comportamiento para añadir y borrar un rol a un rol compuesto, y borrar un rol de una lista de roles
  * @author ACING DIM XLII
- * @version v1.0.0
+ * @version v1.0.2
  */
-public class KeycloakAdminClientUtils {
+public class SauronAdminClientUtils {
 
-    private static Logger log = LoggerFactory.getLogger(KeycloakAdminClientUtils.class);
+    private static Logger log = LoggerFactory.getLogger(SauronAdminClientUtils.class);
 
     /**
-     * Loads the keycloak configuration from system property.
+     * Loads the sauron configuration from system property.
      * 
-     * @return keycloak configuration
-     * @see KeycloakAdminClientConfig
+     * @return sauron configuration
+     * @see SauronAdminClientConfig
      */
-    public static KeycloakAdminClientConfig loadConfig(KeycloakPropertyReader keycloakPropertyReader) {
+    public static SauronAdminClientConfig loadConfig(SauronPropertyReader sauronPropertyReader) {
     	    	
         	
-		KeycloakAdminClientConfig.KeycloakAdminClientConfigBuilder builder = new KeycloakAdminClientConfigBuilder();
+		SauronAdminClientConfig.SauronAdminClientConfigBuilder builder = new SauronAdminClientConfigBuilder();
 
         try {
         	String keycloakServer = System.getProperty("keycloak.url");
             if (!StringUtils.isBlank(keycloakServer)) {
-                builder = (KeycloakAdminClientConfigBuilder) builder.serverUrl(keycloakServer);
+                builder = (SauronAdminClientConfigBuilder) builder.serverUrl(keycloakServer);
 
             } else {
-                builder = (KeycloakAdminClientConfigBuilder) builder.serverUrl(keycloakPropertyReader.getProperty("keycloak.auth-server-url"));
+                builder = (SauronAdminClientConfigBuilder) builder.serverUrl(sauronPropertyReader.getProperty("keycloak.auth-server-url"));
             }
 
             String realm = System.getProperty("keycloak.realm");
             if (!StringUtils.isBlank(realm)) {
-                builder = (KeycloakAdminClientConfigBuilder) builder.realm(realm);
+                builder = (SauronAdminClientConfigBuilder) builder.realm(realm);
 
             } else {
-                builder = (KeycloakAdminClientConfigBuilder) builder.realm(keycloakPropertyReader.getProperty("keycloak.realm"));
+                builder = (SauronAdminClientConfigBuilder) builder.realm(sauronPropertyReader.getProperty("keycloak.realm"));
             }
 
             String clientId = System.getProperty("keycloak.clientId");
             if (!StringUtils.isBlank(clientId)) {
-                builder = (KeycloakAdminClientConfigBuilder) builder.clientId(clientId);
+                builder = (SauronAdminClientConfigBuilder) builder.clientId(clientId);
 
             } else {
-                builder = (KeycloakAdminClientConfigBuilder) builder.clientId(keycloakPropertyReader.getProperty("keycloak.resource"));
+                builder = (SauronAdminClientConfigBuilder) builder.clientId(sauronPropertyReader.getProperty("keycloak.resource"));
             }
 
             String clientSecret = System.getProperty("keycloak.secret");
             if (!StringUtils.isBlank(clientSecret)) {
-                builder = (KeycloakAdminClientConfigBuilder) builder.clientSecret(clientSecret);
+                builder = (SauronAdminClientConfigBuilder) builder.clientSecret(clientSecret);
 
             } else {
-                builder = (KeycloakAdminClientConfigBuilder) builder.clientSecret(keycloakPropertyReader.getProperty("keycloak.credentials.secret"));
+                builder = (SauronAdminClientConfigBuilder) builder.clientSecret(sauronPropertyReader.getProperty("keycloak.credentials.secret"));
             }
 
         } catch (Exception e) {
             log.error("Error: Loading keycloak admin configuration => {}", e.getMessage());
         }
 
-        KeycloakAdminClientConfig config = builder.build();
-        log.debug("Found keycloak configuration: {}", config);
+        SauronAdminClientConfig config = builder.build();
+        log.debug("Found Sauron Configuration: {}", config);
 
         return config;
     }
 
     /**
      * It builds a {@link Keycloak} client from a given configuration. This client
-     * is used to communicate with the Keycloak instance via REST API.
+     * is used to communicate with the Sauron instance via REST API.
      * 
      * @param session the security context
-     * @param config  keycloak configuration
-     * @return Keycloak instance
+     * @param config  Sauron configuration
+     * @return Sauron instance
      * @see Keycloak
-     * @see KeycloakAdminClientConfig
+     * @see SauronAdminClientConfig
      */
-    public static Keycloak getKeycloakClient(KeycloakSecurityContext session, KeycloakAdminClientConfig config) {
+    public static Keycloak getKeycloakClient(KeycloakSecurityContext session, SauronAdminClientConfig config) {
 
         return KeycloakBuilder.builder() //
                 .serverUrl(config.getServerUrl()) //
@@ -112,17 +112,17 @@ public class KeycloakAdminClientUtils {
      * Adds a role to a composite role. A composite role is just a role that
      * contains sub roles.
      * 
-     * @param keycloak                  keycloak instance
-     * @param keycloakAdminClientConfig keycloak configuration
+     * @param sauron                  	sauron instance
+     * @param sauronAdminClientConfig 	sauron configuration
      * @param client                    client id
      * @param role                      role to be added
      * @param compositeRole             where the role will be added
      */
-    public static void addRoleToListOf(Keycloak keycloak, KeycloakAdminClientConfig keycloakAdminClientConfig, String client, String role, String compositeRole) {
+    public static void addRoleToListOf(Keycloak sauron, SauronAdminClientConfig sauronAdminClientConfig, String client, String role, String compositeRole) {
 
-        final String clientUuid = keycloak.realm(keycloakAdminClientConfig.getRealm()).clients().findByClientId(client).get(0).getId();
+        final String clientUuid = sauron.realm(sauronAdminClientConfig.getRealm()).clients().findByClientId(client).get(0).getId();
 
-        RolesResource rolesResource = keycloak.realm(keycloakAdminClientConfig.getRealm()).clients().get(clientUuid).roles();
+        RolesResource rolesResource = sauron.realm(sauronAdminClientConfig.getRealm()).clients().get(clientUuid).roles();
 
         final List<RoleRepresentation> existingRoles = rolesResource.list();
 
@@ -161,16 +161,16 @@ public class KeycloakAdminClientUtils {
     /**
      * Removes a given role from a composite role.
      * 
-     * @param keycloak                  keycloak instance
-     * @param keycloakAdminClientConfig keycloak configuration
+     * @param sauron                 	sauron instance
+     * @param sauronAdminClientConfig	sauron configuration
      * @param role                      role to be deleted
      * @param compositeRole             where the role should be deleted
      */
-    public static void removeRoleInListOf(Keycloak keycloak, KeycloakAdminClientConfig keycloakAdminClientConfig, String role, String compositeRole) {
+    public static void removeRoleInListOf(Keycloak sauron, SauronAdminClientConfig sauronAdminClientConfig, String role, String compositeRole) {
 
-        final String clientUuid = keycloak.realm(keycloakAdminClientConfig.getRealm()).clients().findByClientId(keycloakAdminClientConfig.getClientId()).get(0).getId();
+        final String clientUuid = sauron.realm(sauronAdminClientConfig.getRealm()).clients().findByClientId(sauronAdminClientConfig.getClientId()).get(0).getId();
 
-        final RolesResource rolesResource = keycloak.realm(keycloakAdminClientConfig.getRealm()).clients().get(clientUuid).roles();
+        final RolesResource rolesResource = sauron.realm(sauronAdminClientConfig.getRealm()).clients().get(clientUuid).roles();
 
         final RoleResource compositeRoleResource = rolesResource.get(compositeRole);
 
@@ -179,7 +179,7 @@ public class KeycloakAdminClientUtils {
             compositeRoleResource.getRoleComposites().remove(roleToDelete);
 
         } catch (NotFoundException e) {
-            log.warn("Role {} does not exists!", role);
+            log.warn("¡Rol {} no existe!", role);
         }
     }
 
@@ -188,7 +188,7 @@ public class KeycloakAdminClientUtils {
      * 
      * @param listOfRoleRepresentation list of roles
      * @param roleToBeRemove           role to be remove from the list
-     * @return
+     * @return List of RoleRepresentation
      */
     public static List<RoleRepresentation> removeRoleInList(List<RoleRepresentation> listOfRoleRepresentation, RoleRepresentation roleToBeRemove) {
 

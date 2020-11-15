@@ -11,16 +11,16 @@ import org.springframework.context.annotation.Configuration;
  * Esta clase de configuracion se utiliza para cargar un {@link KeycloakDeployment}
  * con los valores que figuran en el archivo de propiedades con el prefijo keycloak.
  * @author ACING DIM XLII
- * @version v1.0.0
+ * @version v1.0.2
  * @see org.keycloak.adapters.KeycloakDeployment
  * @see org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver
  */
 @Configuration
-public class CustomKeycloakSpringBootConfigResolver extends KeycloakSpringBootConfigResolver {
+public class CustomSauronSpringBootConfigResolver extends KeycloakSpringBootConfigResolver {
 	
 	private final KeycloakDeployment keycloakDeployment; 
 	
-	public CustomKeycloakSpringBootConfigResolver (KeycloakSpringBootProperties properties) {
+	public CustomSauronSpringBootConfigResolver (KeycloakSpringBootProperties properties) {
 		keycloakDeployment = KeycloakDeploymentBuilder.build(properties);
 		
 	}

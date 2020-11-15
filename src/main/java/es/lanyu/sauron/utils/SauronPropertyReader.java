@@ -10,11 +10,11 @@ import org.springframework.core.env.Environment;
  * de la aplicación y proporciona la lectura de las propiedades indicadas en el fichero
  * de propiedades del classpath.
  * @author ACING DIM XLII
- * @version v1.0.0
+ * @version v1.0.2
  */
 @Configuration
 @PropertySource("classpath:sauron.properties")
-public class KeycloakPropertyReader {
+public class SauronPropertyReader {
 
     @Autowired
     private Environment env;

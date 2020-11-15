@@ -1,18 +1,18 @@
 package es.lanyu.sauron.config;
 
 /**
- * Esta clase implementa la configuración de Keycloak usando el patrón Constructor.
+ * Esta clase implementa la configuración de Sauron usando el patrón Constructor.
  * @author ACING DIM XLII
- * @version v1.0.0
+ * @version v1.0.2
  */
-public class KeycloakAdminClientConfig {
+public class SauronAdminClientConfig {
 
 	private String serverUrl;
 	private String realm;
 	private String clientId;
 	private String clientSecret;
 	
-	private KeycloakAdminClientConfig(KeycloakAdminClientConfigBuilder builder) {
+	private SauronAdminClientConfig(SauronAdminClientConfigBuilder builder) {
 		this.serverUrl = builder.serverUrl;
 		this.realm = builder.realm;
 		this.clientId = builder.clientId;
@@ -35,39 +35,39 @@ public class KeycloakAdminClientConfig {
 		return clientSecret;
 	}
 
-	public static class KeycloakAdminClientConfigBuilder {
+	public static class SauronAdminClientConfigBuilder {
 
 		private String serverUrl;
 		private String realm;
 		private String clientId;
 		private String clientSecret;
 		
-		public KeycloakAdminClientConfigBuilder () {}
+		public SauronAdminClientConfigBuilder () {}
 		
-		public KeycloakAdminClientConfigBuilder serverUrl(String serverUrl) {
+		public SauronAdminClientConfigBuilder serverUrl(String serverUrl) {
 			this.serverUrl = serverUrl;
 			return this;
 		}
 
-		public KeycloakAdminClientConfigBuilder realm(String realm) {
+		public SauronAdminClientConfigBuilder realm(String realm) {
 			this.realm = realm;
 			return this;
 		}
 
-		public KeycloakAdminClientConfigBuilder clientId(String clientId) {
+		public SauronAdminClientConfigBuilder clientId(String clientId) {
 			this.clientId = clientId;
 			return this;
 		}
 
 		
-		public KeycloakAdminClientConfigBuilder clientSecret(String clientSecret) {
+		public SauronAdminClientConfigBuilder clientSecret(String clientSecret) {
 			this.clientSecret = clientSecret;
 			return this;
 		}
 
 		
-		public KeycloakAdminClientConfig build() {
-			return new KeycloakAdminClientConfig(this);
+		public SauronAdminClientConfig build() {
+			return new SauronAdminClientConfig(this);
 		}
 		
 	}
