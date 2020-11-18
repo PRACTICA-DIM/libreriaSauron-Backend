@@ -1,4 +1,4 @@
-package es.lanyu.sauron;
+package es.lanyu.sauron.user;
 
 import java.util.List;
 import org.keycloak.representations.idm.UserRepresentation;
