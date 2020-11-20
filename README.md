@@ -2,7 +2,7 @@
 
 Este repositorio contiene todo el código en lenguaje JAVA para securizar el backend API-REST de aplicaciones que implementan el framework SpringBoot y utilizan el Gestor de Identidad y acceso *Sauron*.
 
-<!-- El proyecto contiene un cliente-adaptador que utiliza el framework SpringBoot (Spring Security) e implementa la seguridad necesaria para poder utilizar el producto Sauron mediante un [adaptador JAVA](https://wjw465150.gitbooks.io/keycloak-documentation/content/securing_apps/topics/oidc/java/java-adapters.html) para aplicaciones Springboot ( SpringSecurity ). -->
+El proyecto contiene un cliente-adaptador que utiliza el framework SpringBoot (Spring-Security) e implementa la seguridad necesaria para poder utilizar el producto Sauron mediante un [adaptador JAVA del producto Keycloak](https://wjw465150.gitbooks.io/keycloak-documentation/content/securing_apps/topics/oidc/java/java-adapters.html) para aplicaciones Springboot ( SpringSecurity ).
 
 ---
 

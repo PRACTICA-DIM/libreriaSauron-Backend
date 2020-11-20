@@ -1,5 +1,6 @@
 package es.lanyu.sauron.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,7 +71,16 @@ public class SauronServiceImpl implements SauronService {
 		sauronUserImpl.setFirstname(principal.getKeycloakSecurityContext().getToken().getFamilyName());
 		sauronUserImpl.setLastname(principal.getKeycloakSecurityContext().getToken().getGivenName());
 		sauronUserImpl.setRoles(authorities.stream().map(SimpleGrantedAuthority::getAuthority).collect(Collectors.toList()));
+		
+		Collection<String> rolesRenombrados = new ArrayList<>();
+		sauronUserImpl.getRoles().forEach(r -> {
+			String rolRenombrado = r.replace("ROLE_", "");
+			rolesRenombrados.add(rolRenombrado);
+		});
+		sauronUserImpl.getRoles().clear();
+		sauronUserImpl.getRoles().addAll(rolesRenombrados);
 
+		
 		return sauronUserImpl;
 	}
 	

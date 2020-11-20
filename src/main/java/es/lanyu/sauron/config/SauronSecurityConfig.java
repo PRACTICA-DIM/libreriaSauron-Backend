@@ -26,13 +26,6 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(jsr250Enabled = true)
 public class SauronSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
-
-//	public SimpleAuthorityMapper grantedAuthority() {
-//        SimpleAuthorityMapper mapper = new SimpleAuthorityMapper();
-//        mapper.setConvertToUpperCase(true);
-//        mapper.setPrefix("");
-//        return mapper;
-//    }
 	
 	@Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
