@@ -3,7 +3,7 @@ package es.lanyu.sauron.user;
 import java.util.List;
 
 /**
- * Esta interfaz proporciona los datos básicos y roles del usuario autenticado en el servidor Sauron. 
+ * Esta interfaz proporciona los datos basicos (perfil) y roles del usuario autenticado en el servidor Sauron. 
  * @author ACING DIM XLII
  * @version v1.0.0 
  */

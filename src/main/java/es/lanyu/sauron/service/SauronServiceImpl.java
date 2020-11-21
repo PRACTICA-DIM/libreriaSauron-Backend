@@ -26,10 +26,10 @@ import es.lanyu.sauron.user.SauronUserImpl;
 import es.lanyu.sauron.user.SauronUserRepresentation;
 
 /**
- * Esta clase es un servicio, especialización de @Component, que
- * proporciona un usuario {@link SauronUser} autenticado y sus roles, también proporciona un {@link SauronUserRepresentation} mediante
- * el método {@link getUserProfil()}, así como todos los roles del Realm donde se encuentra securizado el cliente mediante
- * el método {@link getRolesRealm()}.
+ * Esta clase es un servicio @Service, especialización de @Component, que
+ * proporciona un usuario {@link SauronUser} autenticado y sus roles, tambien proporciona un {@link SauronUserRepresentation} mediante
+ * el metodo {@link getUserProfil()}, así como todos los roles de la aplicacion donde se encuentra securizado el cliente mediante
+ * el metodo {@link getRolesRealm()}.
  * @author ACING DIM XLII
  * @version v2.0.0
  * @see es.lanyu.sauron.SauronUser
@@ -118,10 +118,7 @@ public class SauronServiceImpl implements SauronService {
 		List<RoleRepresentation> roleRepresentationList = rolesResource.list();
 
 		List<String> roles = roleRepresentationList.stream().map(r -> r.getName().toUpperCase()).collect(Collectors.toList());
-		System.out.println(roles.toString() + "-->entrada en getRealmRoles");
-		
-//		getKeycloak().close();
-				
+//		System.out.println(roles.toString() + "-->entrada en getRealmRoles");
 		return roles;
 		
 	}

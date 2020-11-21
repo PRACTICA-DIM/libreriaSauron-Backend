@@ -16,17 +16,22 @@ import org.springframework.security.web.authentication.session.NullAuthenticated
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 
 /**
- * Esta clase de configuración proporciona una adaptador JAVA para Spring-Security
- *  basado en el producto Sauron.
+ * Esta clase de configuración proporciona una adaptador JAVA Spring-Security
+ *  para poder hacer uso de un servidor IAM Sauron.
  * @author ACING DIM XLII
  * @version v2.0.0
  * @see KeycloakWebSecurityConfigurerAdapter
  */
 @KeycloakConfiguration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(jsr250Enabled = true)
+@EnableGlobalMethodSecurity(jsr250Enabled = true)//permite utilizar la anotación @RolesAllowed, nativa de Java.
 public class SauronSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 	
+	/**
+	 * Proporciona como proveedor de autenticacion el producto Sauron al entorno de seguridad.
+	 * @param auth
+	 * @throws Exception
+	 */
 	@Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         KeycloakAuthenticationProvider provider = new KeycloakAuthenticationProvider();
@@ -34,22 +39,28 @@ public class SauronSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         auth.authenticationProvider(provider);
     }
 
+//	Comprueba que exista una sesion valida en las peticiones Http
     @Bean
     @Override
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
         return new NullAuthenticatedSessionStrategy();
     }
 
+    //Permite configurar la seguridad basada en web para http requests específicos. 
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
         super.configure(http);
-        http
-                .authorizeRequests()
-                .anyRequest().permitAll();
+        http.authorizeRequests()
+            .anyRequest().permitAll();
         http.csrf().disable();
     }
 
+    /**
+     * Proporciona un KeycloakDeployment para autenticar y autorizar las peticiones en base a las propiedades
+     * configuradas en el archivo .properties.
+     * @return KeycloakConfigResolver
+     */
     @Bean
     public KeycloakConfigResolver keycloakConfigResolver(){
         return new KeycloakSpringBootConfigResolver();

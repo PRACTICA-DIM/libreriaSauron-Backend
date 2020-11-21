@@ -4,8 +4,8 @@ import java.util.List;
 import org.keycloak.representations.idm.UserRepresentation;
 
 /**
- * Esta clase es una implementación de {@link SauronUser} para obtener un {@link UserRepresentation} como representación de un 
- * usuario del producto Keycloak.
+ * Esta clase es una implementacion de {@link SauronUser} para obtener un {@link UserRepresentation} como representacion de un 
+ * usuario del producto Sauron.
  * @author ACING DIM XLII
  * @version v1.0.0
  * @see SauronUser

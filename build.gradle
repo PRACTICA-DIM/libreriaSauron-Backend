@@ -25,11 +25,14 @@ dependencies {
 	//Springboot
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	
 	//Keycloak
 	compile group: 'org.keycloak', name: 'keycloak-spring-boot-starter', version: '11.0.2'
 	compile group: 'org.keycloak', name: 'keycloak-admin-client', version: '11.0.2'
+	
 	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
 	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'		
+	
 	//Tests
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
