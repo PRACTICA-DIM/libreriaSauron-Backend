@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
  * Esta clase de configuración proporciona una adaptador JAVA Spring-Security
  *  para poder hacer uso de un servidor IAM Sauron.
  * @author ACING DIM XLII
- * @version v2.0.0
+ * @version v2.1.0
  * @see KeycloakWebSecurityConfigurerAdapter
  */
 @KeycloakConfiguration
