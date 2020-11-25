@@ -31,7 +31,7 @@ import es.lanyu.sauron.user.SauronUserRepresentation;
  * el metodo {@link getUserProfil()}, así como todos los roles de la aplicacion donde se encuentra securizado el cliente mediante
  * el metodo {@link getRolesRealm()}.
  * @author ACING DIM XLII
- * @version v2.0.0
+ * @version v2.1.0
  * @see es.lanyu.sauron.SauronUser
  * @see es.lanyu.sauron.SauronUserRepresentation
  * 
@@ -120,6 +120,18 @@ public class SauronServiceImpl implements SauronService {
 		List<String> roles = roleRepresentationList.stream().map(r -> r.getName().toUpperCase()).collect(Collectors.toList());
 //		System.out.println(roles.toString() + "-->entrada en getRealmRoles");
 		return roles;
+		
+	}
+	
+	public List<UserRepresentation> getUsersWithRol (String rol){
+		
+		List<UserRepresentation> usuarios = new ArrayList<UserRepresentation>();
+		
+		usuarios = getRealmResource().users().list().stream().filter(u -> u.getRealmRoles().contains(rol)).collect(Collectors.toList());
+		
+//		System.out.println("--> Usuarios con rol: "+ rol + "=" + usuarios.stream().map(u -> u.getUsername()).collect(Collectors.toList()));
+		
+		return usuarios;
 		
 	}
 

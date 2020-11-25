@@ -25,7 +25,9 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
  */
 @KeycloakConfiguration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(jsr250Enabled = true)//permite utilizar la anotación @RolesAllowed, nativa de Java.
+@EnableGlobalMethodSecurity(prePostEnabled = true, 		//permite utilizar la anotación pre/post de Spring Security.
+							securedEnabled = true,		//permite utilizar la anotación @Secured de Spring Security.
+							jsr250Enabled = true)		//permite utilizar la anotación @RolesAllowed, nativa de Java.
 @PropertySource("classpath:sauronBasic.properties")
 public class SauronSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 	
