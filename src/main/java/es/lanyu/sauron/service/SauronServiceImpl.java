@@ -33,7 +33,7 @@ import es.lanyu.sauron.user.SauronUserRepresentation;
  * el metodo {@link getUserProfil()}, así como todos los roles de la aplicacion donde se encuentra securizado el cliente mediante
  * el metodo {@link getRolesRealm()}.
  * @author ACING DIM XLII
- * @version v2.1.0
+ * @version v2.1.1
  * @see es.lanyu.sauron.SauronUser
  * @see es.lanyu.sauron.SauronUserRepresentation
  * 
@@ -58,7 +58,7 @@ public class SauronServiceImpl implements SauronService {
 		
 	@SuppressWarnings("unchecked")
 	@Override
-	public SauronUser getSauronUser() {
+	public SauronUser getCurrentUser() {
 		SauronUserImpl sauronUserImpl = new SauronUserImpl();
 
 		KeycloakPrincipal<RefreshableKeycloakSecurityContext> principal = (KeycloakPrincipal<RefreshableKeycloakSecurityContext>) SecurityContextHolder
@@ -86,8 +86,9 @@ public class SauronServiceImpl implements SauronService {
 		return sauronUserImpl;
 	}
 	
+	@Override
 	public List<String> getCurrentUserRoles() {
-		return getSauronUser().getRoles();
+		return getCurrentUser().getRoles();
 	}
 
 	@Override
@@ -124,15 +125,41 @@ public class SauronServiceImpl implements SauronService {
 		return roles;
 		
 	}
+	@Override
+	public List<SauronUser> getUsersRealm() {
+		List<SauronUser> sauronUsers = new ArrayList<SauronUser>();
+		List<UserRepresentation> representationUsers = getUsersResource().list();
+		representationUsers.stream().forEach(u -> {
+			SauronUserRepresentation usuario = new SauronUserRepresentation(u);
+			sauronUsers.add(usuario);
+		});
+				
+		return sauronUsers;
+		
+	}
 	
-	public Set<UserRepresentation> getUsersWithRol (String rol){
+	//TODO
+	/* Obtiene los usuarios con un rol dado.
+	 * @return Set<UserRepresentation>
+	 */
+	@Override
+	public List<SauronUserRepresentation> getUsersWithRol (String rol) {
 		
 		Set<UserRepresentation> usuariosConRol = new HashSet<UserRepresentation>();
 		usuariosConRol = getRealmResource().roles().get(rol).getRoleUserMembers();
 		
-		return usuariosConRol;
+		List<SauronUserRepresentation> sauronUsersConRol = new ArrayList<SauronUserRepresentation>();
+		usuariosConRol.stream().forEach(u -> {
+			SauronUserRepresentation usuario = new SauronUserRepresentation(u);
+			sauronUsersConRol.add(usuario);
+		});
+		
+		
+		return sauronUsersConRol;
 		
 	}
+	
+	
 
 	
 	/* Obtiene el perfil del usuario autenticado.
@@ -142,10 +169,10 @@ public class SauronServiceImpl implements SauronService {
 	@Override
 	public SauronUserRepresentation getUserProfile() {
 		
-		UserResource userResource = getUsersResource().get(getSauronUser().getUserId());
+		UserResource userResource = getUsersResource().get(getCurrentUser().getUserId());
 		
 		UserRepresentation userRepresentation = userResource.toRepresentation();
-		userRepresentation.setRealmRoles(getSauronUser().getRoles());
+		userRepresentation.setRealmRoles(getCurrentUser().getRoles());
 
 		return new SauronUserRepresentation(userRepresentation);
 	}
