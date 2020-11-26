@@ -2,7 +2,9 @@ package es.lanyu.sauron.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
@@ -118,20 +120,17 @@ public class SauronServiceImpl implements SauronService {
 		List<RoleRepresentation> roleRepresentationList = rolesResource.list();
 
 		List<String> roles = roleRepresentationList.stream().map(r -> r.getName().toUpperCase()).collect(Collectors.toList());
-//		System.out.println(roles.toString() + "-->entrada en getRealmRoles");
+
 		return roles;
 		
 	}
 	
-	public List<UserRepresentation> getUsersWithRol (String rol){
+	public Set<UserRepresentation> getUsersWithRol (String rol){
 		
-		List<UserRepresentation> usuarios = new ArrayList<UserRepresentation>();
+		Set<UserRepresentation> usuariosConRol = new HashSet<UserRepresentation>();
+		usuariosConRol = getRealmResource().roles().get(rol).getRoleUserMembers();
 		
-		usuarios = getRealmResource().users().list().stream().filter(u -> u.getRealmRoles().contains(rol)).collect(Collectors.toList());
-		
-//		System.out.println("--> Usuarios con rol: "+ rol + "=" + usuarios.stream().map(u -> u.getUsername()).collect(Collectors.toList()));
-		
-		return usuarios;
+		return usuariosConRol;
 		
 	}
 
